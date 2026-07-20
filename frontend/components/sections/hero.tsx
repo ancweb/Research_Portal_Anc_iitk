@@ -46,7 +46,7 @@ export default function Hero() {
             Explore Research
           </Link>
           <Link
-            href="/research-portal"
+            href="/portal"
             className="px-8 py-4 rounded-lg border-2 border-gold text-gold font-semibold hover:bg-gold/10 transition-colors"
           >
             Access Portal

@@ -48,7 +48,7 @@ export default function Navbar() {
 
         {/* Desktop CTA */}
         <Link
-          href="/research-portal"
+          href="/portal"
           className="hidden md:inline-block px-6 py-2 rounded-full bg-gold text-charcoal font-semibold text-sm hover:bg-gold/90 transition-colors"
         >
           Research Portal
@@ -78,7 +78,7 @@ export default function Navbar() {
             </Link>
           ))}
           <Link
-            href="/research-portal"
+            href="/portal"
             onClick={() => setMobileOpen(false)}
             className="mt-2 px-6 py-2 rounded-full bg-gold text-charcoal font-semibold text-sm text-center hover:bg-gold/90 transition-colors"
           >

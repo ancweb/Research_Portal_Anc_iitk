@@ -1,19 +1,17 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
-import { Source_Serif_4, Inter } from 'next/font/google'
+import { Source_Serif_4, Inter, Geist } from 'next/font/google'
 import { ThemeProvider } from '@/components/theme-provider'
 import FloatingThemeToggle from '@/components/floating-theme-toggle'
 import './globals.css'
+import { cn } from "@/lib/utils";
 
 const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
   variable: '--font-serif',
 })
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-sans',
-})
+const geist = Geist({subsets:['latin'],variable:'--font-sans'})
 
 export const metadata: Metadata = {
   title: 'IIT Kanpur Research Wing',
@@ -52,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${sourceSerif.variable} ${inter.variable}`}>
+    <html lang="en" className={cn(sourceSerif.variable, "font-sans", geist.variable)}>
       <body className="font-sans antialiased">
         <ThemeProvider>
           {children}
