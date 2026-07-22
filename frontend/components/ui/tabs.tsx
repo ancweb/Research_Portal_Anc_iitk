@@ -38,16 +38,30 @@ const tabsListVariants = cva(
   }
 )
 
+// function TabsList({
+//   className,
+//   variant = "default",
+//   ...props
+// }: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+//   return (
+//     <TabsPrimitive.List
+//       data-slot="tabs-list"
+//       data-variant={variant}
+//       className={cn(tabsListVariants({ variant }), className)}
+//       {...props}
+//     />
+//   )
+// }
 function TabsList({
   className,
-  variant = "default",
   ...props
-}: TabsPrimitive.List.Props & VariantProps<typeof tabsListVariants>) {
+}: React.ComponentProps<typeof TabsPrimitive.List>) {
   return (
     <TabsPrimitive.List
-      data-slot="tabs-list"
-      data-variant={variant}
-      className={cn(tabsListVariants({ variant }), className)}
+      className={cn(
+        "grid items-stretch rounded-xl p-1",
+        className
+      )}
       {...props}
     />
   )

@@ -10,7 +10,6 @@ import PostVacancyForm from '@/components/admin/PostVacancyForm';
 import AddInternshipForm from '@/components/admin/AddInternshipForm';
 import PublishEventForm from '@/components/admin/PublishEventForm';
 
-// ── Tab definitions ──────────────────────────────────────────────────────────
 
 const TABS = [
   { value: 'professor',   label: 'Add Professor',  icon: UserPlus,  short: 'Professor' },
@@ -21,7 +20,6 @@ const TABS = [
 
 type TabValue = (typeof TABS)[number]['value'];
 
-// ── Page ─────────────────────────────────────────────────────────────────────
 
 export default function AdminPanelPage() {
   const router = useRouter();
@@ -29,7 +27,6 @@ export default function AdminPanelPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState<TabValue>('professor');
 
-  // ── Auth guard ─────────────────────────────────────────────────────────────
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token');
@@ -52,7 +49,6 @@ export default function AdminPanelPage() {
       });
   }, [router, API_BASE]);
 
-  // ── Shared helpers passed down to every form ───────────────────────────────
 
   const getAuthHeaders = (): Record<string, string> => {
     const token = localStorage.getItem('admin_token');
@@ -78,7 +74,6 @@ export default function AdminPanelPage() {
     router.push('/portal/admin/login');
   };
 
-  // ── Auth loading state ─────────────────────────────────────────────────────
 
   if (!isAuthenticated) {
     return (
@@ -92,7 +87,6 @@ export default function AdminPanelPage() {
 
   return (
     <div className="min-h-screen bg-cream">
-      {/* ── Branded navbar ───────────────────────────────────────────────── */}
       <PortalNavbar
         title="Admin Panel"
         backHref="/portal"
@@ -108,7 +102,6 @@ export default function AdminPanelPage() {
         }
       />
 
-      {/* ── Sub-header strip ─────────────────────────────────────────────── */}
       <div className="border-b border-gold/20 bg-white/70 backdrop-blur-sm">
         <div className="mx-auto flex max-w-4xl flex-col gap-2 px-4 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
           <div>
@@ -120,21 +113,19 @@ export default function AdminPanelPage() {
         </div>
       </div>
 
-      {/* ── Main content ─────────────────────────────────────────────────── */}
       <main className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:py-10">
         <Tabs
           value={activeTab}
           onValueChange={(v) => setActiveTab(v as TabValue)}
           className="gap-0"
         >
-          {/* ── Tab bar ──────────────────────────────────────────────────── */}
           <div className="mb-6 overflow-x-auto">
             <TabsList className="h-auto w-full min-w-max rounded-xl border border-gold/20 bg-white p-1 shadow-sm">
               {TABS.map(({ value, label, icon: Icon }) => (
                 <TabsTrigger
                   key={value}
                   value={value}
-                  className="flex flex-1 items-center justify-center gap-2 rounded-lg px-4 py-2.5 text-sm font-medium text-charcoal/60 transition-colors hover:text-maroon data-[state=active]:bg-maroon data-[state=active]:text-white data-[state=active]:shadow-sm"
+                  className="flex flex-1 items-center justify-center gap-2 rounded-lg px-8 py-2.5 text-md font-medium text-charcoal/60 transition-colors hover:text-maroon data-[state=active]:bg-maroon data-[state=active]:text-white data-[state=active]:shadow-sm"
                 >
                   <Icon className="w-4 h-4 shrink-0" />
                   <span className="hidden sm:inline">{label}</span>
@@ -144,7 +135,6 @@ export default function AdminPanelPage() {
             </TabsList>
           </div>
 
-          {/* ── Panels ───────────────────────────────────────────────────── */}
           <TabsContent value="professor">
             <AddProfessorForm {...formProps} />
           </TabsContent>
@@ -163,7 +153,6 @@ export default function AdminPanelPage() {
         </Tabs>
       </main>
 
-      {/* ── Footer ───────────────────────────────────────────────────────── */}
       <footer className="bg-maroon text-cream py-6">
         <p className="text-center text-sm text-cream/60">
           Research Wing, Academics &amp; Careers &middot; IIT Kanpur &mdash; Admin access for wing coordinators only.

@@ -39,7 +39,6 @@ import {
 } from '@/components/ui/select';
 import PortalNavbar from '@/components/portal-navbar';
 
-/* ─────────────── Types matching the MongoDB documents ─────────────── */
 
 interface Professor {
   _id: string;
@@ -81,12 +80,12 @@ interface ProjectVacancy {
   professors?: { name: string; email: string };
 }
 
-/* ─────────────── Helper to get a unique key ─────────────── */
+/* Helper to get a unique key  */
 function getKey(item: { _id?: string; id?: string }, idx: number): string {
   return item._id || item.id || String(idx);
 }
 
-/* ─────────────── Helper to extract department code ─────────────── */
+/*  Helper to extract department code  */
 function getProfDept(prof: Professor): string {
   return prof.departments?.code || prof.department || prof.department_id || 'N/A';
 }
@@ -95,17 +94,17 @@ function getVacDept(vac: ProjectVacancy): string {
   return vac.labs?.departments?.code || vac.department || 'N/A';
 }
 
-/* ─────────────── Helper to extract research interests ─────────────── */
+/*  Helper to extract research interests  */
 function getResearchInterests(prof: Professor): string[] {
   return prof.research_interests ?? prof.researchInterests ?? [];
 }
 
-/* ─────────────── Helper to extract vacancy title ─────────────── */
+/*  Helper to extract vacancy title  */
 function getVacTitle(vac: ProjectVacancy): string {
   return vac.title || vac.projectTitle || 'Untitled Project';
 }
 
-/* ─────────────── Helper to extract professor name for vacancy ─────────────── */
+/*  Helper to extract professor name for vacancy  */
 function getVacProfessor(vac: ProjectVacancy): string {
   return vac.professors?.name || vac.professorName || '';
 }
@@ -156,12 +155,12 @@ export default function PortalPage() {
     fetchData();
   }, []);
 
-  /* ─────────────── Derive unique departments from professors ─────────────── */
+  /*  Derive unique departments from professors  */
   const departmentCodes = Array.from(
     new Set(professors.map((p) => getProfDept(p)).filter((d) => d && d !== 'N/A')),
   ).sort();
 
-  /* ─────────────── Filtering ─────────────── */
+
   const filteredProfessors = professors.filter((prof) => {
     const q = searchQuery.toLowerCase();
     const interests = getResearchInterests(prof);
@@ -203,12 +202,17 @@ export default function PortalPage() {
             </div>
             <div className="flex flex-col sm:flex-row gap-3 shrink-0">
               <Link href="/portal/events">
-                <Button className="bg-gold text-charcoal hover:bg-gold/90 font-semibold w-full sm:w-auto rounded-full px-6">
+                <Button className="bg-gold text-charcoal hover:bg-gold/90 font-bold w-full sm:w-auto rounded-full px-12">
                   Events &amp; Notices
                 </Button>
               </Link>
+              <Link href="/international-internships">
+                <Button className="bg-white/15 text-white border border-white/25 hover:bg-white/25 w-full sm:rounded-full px-12">
+                  International Internships
+                </Button>
+              </Link>
               <Link href="/portal/admin">
-                <Button className="bg-white/15 text-white border border-white/25 hover:bg-white/25 w-full sm:w-auto rounded-full px-6">
+                <Button className="bg-white/15 text-white border border-white/25 hover:bg-white/25 w-full rounded-full px-12">
                   Admin Panel
                 </Button>
               </Link>
@@ -242,25 +246,62 @@ export default function PortalPage() {
         </div>
 
         {/* Main Tabs */}
-        <Tabs value={activeTab} onValueChange={(v) => { if (v) setActiveTab(v) }} className="space-y-6">
+        {/* <Tabs value={activeTab} onValueChange={(v) => { if (v) setActiveTab(v) }} className="space-y-6">
           <TabsList className="grid w-full grid-cols-3 bg-white border border-gold/20 rounded-xl p-1 h-auto shadow-sm">
-            <TabsTrigger value="directory" className="py-2.5 text-sm font-medium rounded-lg data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm">
+            <TabsTrigger value="directory" className="py-2.5 text-sm font-medium rounded-lg">
               <Users className="mr-2 h-4 w-4" />
               <span className="hidden sm:inline">Professor </span>Directory
             </TabsTrigger>
-            <TabsTrigger value="vacancies" className="py-2.5 text-sm font-medium rounded-lg data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm relative">
+            <TabsTrigger value="vacancies" className="py-2.5 text-sm font-medium rounded-lg ">
               <Bell className="mr-2 h-4 w-4" />
               Notice Board
               {filteredVacancies.length > 0 && (
                 <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold">{filteredVacancies.length}</span>
               )}
             </TabsTrigger>
-            <TabsTrigger value="resources" className="py-2.5 text-sm font-medium rounded-lg data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm">
+            <TabsTrigger value="resources" className="py-2.5 text-sm font-medium rounded-lg ">
               <BookOpen className="mr-2 h-4 w-4" />
               Resources
             </TabsTrigger>
           </TabsList>
+ */}
+        {/* Main Tabs */}
+        <Tabs value={activeTab} onValueChange={(v) => { if (v) setActiveTab(v) }} className="space-y-12">
+          <TabsList className="grid w-full grid-cols-3 h-14 bg-white border border-gold/20 rounded-xl shadow-sm">
 
+            
+            <TabsTrigger
+              value="directory"
+              className="py-3 text-sm h-full font-medium rounded-lg transition-all text-slate-600 data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm"
+            >
+              <Users className="mr-2 h-4 w-4 shrink-0" />
+              <span className="hidden sm:inline mr-1">Professor</span>
+              <span>Directory</span>
+            </TabsTrigger>
+
+      
+            <TabsTrigger
+              value="vacancies"
+              className="py-3 text-sm h-full font-medium rounded-lg transition-all text-slate-600 data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm relative flex items-center justify-center"
+            >
+              <Bell className="mr-2 h-4 w-4 shrink-0" />
+              <span>Notice Board</span>
+              {filteredVacancies.length > 0 && (
+                <span className="ml-2 inline-flex items-center justify-center w-5 h-5 rounded-full bg-red-500 text-white text-[10px] font-bold shrink-0">
+                  {filteredVacancies.length}
+                </span>
+              )}
+            </TabsTrigger>
+
+            <TabsTrigger
+              value="resources"
+              className="py-3 text-m h-full font-medium rounded-lg transition-all text-slate-600 data-[state=active]:bg-maroon data-[state=active]:text-cream data-[state=active]:shadow-sm"
+            >
+              <BookOpen className="mr-2 h-4 w-4 shrink-0" />
+              <span>Resources</span>
+            </TabsTrigger>
+
+          </TabsList>
           <TabsContent value="directory">
             {loading ? (
               <div className="flex items-center justify-center py-20">
@@ -276,82 +317,82 @@ export default function PortalPage() {
                   </h2>
                 </div>
 
-                  {filteredProfessors.length === 0 ? (
-                    <div className="rounded-xl border border-gold/20 bg-white p-12 text-center">
-                      <GraduationCap className="h-10 w-10 mx-auto text-charcoal/20 mb-3" />
-                      <p className="font-medium text-charcoal mb-1">No professors found</p>
-                      <p className="text-sm text-charcoal/50">Try adjusting your search or department filter.</p>
-                    </div>
-                  ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                      {filteredProfessors.map((professor, idx) => {
-                        const interests = getResearchInterests(professor);
-                        const dept = getProfDept(professor);
-                        const initials = professor.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase();
+                {filteredProfessors.length === 0 ? (
+                  <div className="rounded-xl border border-gold/20 bg-white p-12 text-center">
+                    <GraduationCap className="h-10 w-10 mx-auto text-charcoal/20 mb-3" />
+                    <p className="font-medium text-charcoal mb-1">No professors found</p>
+                    <p className="text-sm text-charcoal/50">Try adjusting your search or department filter.</p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {filteredProfessors.map((professor, idx) => {
+                      const interests = getResearchInterests(professor);
+                      const dept = getProfDept(professor);
+                      const initials = professor.name.split(' ').map((n) => n[0]).join('').slice(0, 2).toUpperCase();
 
-                        return (
-                          <div
-                            key={getKey(professor, idx)}
-                            className="bg-white rounded-xl border border-gold/20 p-5 hover:shadow-md hover:border-gold/40 transition-all duration-200 flex flex-col gap-4"
-                          >
-                            <div className="flex items-start gap-3">
-                              <div className="w-12 h-12 rounded-full bg-maroon flex items-center justify-center text-cream font-bold text-sm shrink-0">
-                                {initials}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <h3 className="font-semibold text-charcoal truncate">{professor.name}</h3>
-                                {professor.designation && (
-                                  <p className="text-xs text-charcoal/50 mt-0.5">{professor.designation}</p>
-                                )}
-                                <div className="flex items-center gap-2 mt-2 flex-wrap">
-                                  <span className="inline-flex items-center rounded-full bg-gold/10 px-2.5 py-0.5 text-xs font-medium text-maroon border border-gold/20">
-                                    {dept}
-                                  </span>
-                                  {professor.is_accepting_students ? (
-                                    <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200">
-                                      Accepting Students
-                                    </span>
-                                  ) : (
-                                    <span className="inline-flex items-center rounded-full bg-charcoal/5 px-2.5 py-0.5 text-xs text-charcoal/50 border border-charcoal/10">
-                                      Not Accepting
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
+                      return (
+                        <div
+                          key={getKey(professor, idx)}
+                          className="bg-white rounded-xl border border-gold/20 p-5 hover:shadow-md hover:border-gold/40 transition-all duration-200 flex flex-col gap-4"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="w-12 h-12 rounded-full bg-maroon flex items-center justify-center text-cream font-bold text-sm shrink-0">
+                              {initials}
                             </div>
-
-                            {interests.length > 0 && (
-                              <div className="flex flex-wrap gap-1.5">
-                                {interests.slice(0, 3).map((interest, i) => (
-                                  <span key={i} className="rounded-full bg-cream px-2.5 py-0.5 text-xs text-charcoal/70 border border-gold/15">
-                                    {interest}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-
-                            <div className="space-y-1.5 text-sm text-charcoal/60 border-t border-gold/10 pt-3">
-                              <a href={`mailto:${professor.email}`} className="flex items-center gap-2 hover:text-maroon transition-colors truncate">
-                                <Mail className="h-3.5 w-3.5 shrink-0" />
-                                <span className="truncate">{professor.email}</span>
-                              </a>
-                              {professor.labWebsite && (
-                                <a href={professor.labWebsite} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-maroon transition-colors">
-                                  <ExternalLink className="h-3.5 w-3.5 shrink-0" />
-                                  <span>Lab Website</span>
-                                </a>
+                            <div className="flex-1 min-w-0">
+                              <h3 className="font-semibold text-charcoal truncate">{professor.name}</h3>
+                              {professor.designation && (
+                                <p className="text-xs text-charcoal/50 mt-0.5">{professor.designation}</p>
                               )}
+                              <div className="flex items-center gap-2 mt-2 flex-wrap">
+                                <span className="inline-flex items-center rounded-full bg-gold/10 px-2.5 py-0.5 text-xs font-medium text-maroon border border-gold/20">
+                                  {dept}
+                                </span>
+                                {professor.is_accepting_students ? (
+                                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-2.5 py-0.5 text-xs font-medium text-emerald-700 border border-emerald-200">
+                                    Accepting Students
+                                  </span>
+                                ) : (
+                                  <span className="inline-flex items-center rounded-full bg-charcoal/5 px-2.5 py-0.5 text-xs text-charcoal/50 border border-charcoal/10">
+                                    Not Accepting
+                                  </span>
+                                )}
+                              </div>
                             </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  )}
+
+                          {interests.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {interests.slice(0, 3).map((interest, i) => (
+                                <span key={i} className="rounded-full bg-cream px-2.5 py-0.5 text-xs text-charcoal/70 border border-gold/15">
+                                  {interest}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+
+                          <div className="space-y-1.5 text-sm text-charcoal/60 border-t border-gold/10 pt-3">
+                            <a href={`mailto:${professor.email}`} className="flex items-center gap-2 hover:text-maroon transition-colors truncate">
+                              <Mail className="h-3.5 w-3.5 shrink-0" />
+                              <span className="truncate">{professor.email}</span>
+                            </a>
+                            {professor.labWebsite && (
+                              <a href={professor.labWebsite} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 hover:text-maroon transition-colors">
+                                <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                                <span>Lab Website</span>
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
           </TabsContent>
 
-          {/* ─────────────── Notice Board – Project Vacancies ─────────────── */}
+
           <TabsContent value="vacancies">
             {loading ? (
               <div className="flex items-center justify-center py-16">
@@ -381,11 +422,11 @@ export default function PortalPage() {
                       const dept = getVacDept(vacancy);
                       const daysLeft = vacancy.deadline
                         ? Math.max(
-                            0,
-                            Math.ceil(
-                              (new Date(vacancy.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
-                            ),
-                          )
+                          0,
+                          Math.ceil(
+                            (new Date(vacancy.deadline).getTime() - Date.now()) / (1000 * 60 * 60 * 24),
+                          ),
+                        )
                         : null;
 
                       return (
@@ -397,13 +438,12 @@ export default function PortalPage() {
                             <h3 className="font-semibold text-foreground text-lg">{title}</h3>
                             {daysLeft !== null && (
                               <Badge
-                                className={`${
-                                  daysLeft <= 7
+                                className={`${daysLeft <= 7
                                     ? 'bg-red-500'
                                     : daysLeft <= 14
-                                    ? 'bg-amber-500'
-                                    : 'bg-emerald-500'
-                                } text-white shrink-0`}
+                                      ? 'bg-amber-500'
+                                      : 'bg-emerald-500'
+                                  } text-white shrink-0`}
                               >
                                 {daysLeft} days left
                               </Badge>

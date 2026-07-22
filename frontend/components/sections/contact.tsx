@@ -7,20 +7,20 @@ const TEAM_MEMBERS = [
   {
     name: 'Anshu',
     email: 'anshus24@iitk.ac.in',
-    role: 'Research Portal Manager',
+    role: 'Research Wing Manager',
     avatar: '/placeholder-user.jpg', // default profile picture for the manager
   },
   {
     name: 'Antriksh Singhal',
     email: 'antrikshs24@iitk.ac.in',
-    role: 'Research Portal Manager',
-    avatar: null,
+    role: 'Research Wing Manager',
+    avatar: "/antriksh_research.webp",
   },
   {
     name: 'Neha',
     email: 'ensri24@iitk.ac.in',
-    role: 'Research Portal Manager',
-    avatar: null,
+    role: 'Research Wing Manager',
+    avatar: "/neha.webp",
   },
 ]
 
