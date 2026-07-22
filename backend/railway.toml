@@ -1,0 +1,26 @@
+# ─── Railway Deployment Configuration ────────────────────────────────────────
+# Deploys the Go backend service.
+# The PostgreSQL database is provisioned separately as a Railway plugin/service.
+#
+# Railway injects DATABASE_URL automatically when a Postgres service is linked.
+# All other required env vars must be set in the Railway dashboard.
+#
+# Required env vars (set in Railway dashboard → Variables):
+#   DATABASE_URL          — auto-injected by Railway Postgres plugin
+#   JWT_SECRET            — long random string (openssl rand -hex 32)
+#   CORS_ALLOWED_ORIGINS  — your Vercel frontend URL, e.g. https://your-app.vercel.app
+# ─────────────────────────────────────────────────────────────────────────────
+
+[build]
+builder = "dockerfile"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "./server"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3
+
+[[services]]
+name = "backend"
