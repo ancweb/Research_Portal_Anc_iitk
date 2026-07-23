@@ -61,6 +61,9 @@ func main() {
 	allowedOrigins := []string{"*"}
 	if origins := os.Getenv("CORS_ALLOWED_ORIGINS"); origins != "" {
 		allowedOrigins = []string{origins}
+		log.Printf("CORS configured for origins: %v", allowedOrigins)
+	} else {
+		log.Println("CORS_ALLOWED_ORIGINS not set, allowing all origins (*)")
 	}
 
 	c := cors.New(cors.Options{
